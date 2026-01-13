@@ -25,11 +25,11 @@ jobs:
       
       - name: Get AUT URL
         run: |
-          URL=http://$(ip -f inet -o addr show docker0 | awk '{print $4}' | cut -d '/' -f 1)
+          URL=http://docker-apache
           echo "URL=$URL" >> $GITHUB_ENV
       
       - name: Check AUT Url
-        run: curl ${{ env.URL }}
+        run: docker run --network=isolated --rm curlimages/curl:latest curl http://docker-apache
       
       - name: Selenium Preparation
         run: docker run --network=isolated -d -p 4444:4444 -p 7900:7900 --shm-size="2g" --name firefox-standalone selenium/standalone-firefox:latest
