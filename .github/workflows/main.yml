@@ -44,7 +44,7 @@ jobs:
         run: pip install -U selenium
       
       - name: Run test
-        run: python tests/hello_aut.py ${{ env.URL }}
+        run: docker run --network=isolated -v $PWD:/workspace -w /workspace python:3.9-slim sh -c "pip install selenium && python tests/hello_aut.py ${{ env.URL }}"
       
       - name: stop docker
         run: docker stop docker-apache
